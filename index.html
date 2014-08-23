@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>hello phaser!</title>
+        <script src="js/phaser.js"></script>
+        <link type="text/css" rel="stylesheet" href="css/style.css">
+  
+
+    </head>
+    <body>
+
+    <script type="text/javascript">
+
+    var game = new Phaser.Game(700, 700, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update });
+
+    function preload() {
+
+        game.load.image('background', 'assets/background.png');
+        game.load.image('p1', 'assets/p1.png');
+        game.load.image('p2', 'assets/p2.png');
+
+    }
+
+    var sprite;
+
+    var upKey;
+    var downKey;
+    var leftKey;
+    var rightKey;
+
+    function create() {
+
+        game.add.sprite(0, 0, 'background');
+
+        p1 = game.add.sprite(5, 5, 'p1');
+
+        p2 = game.add.sprite(675, 675, 'p2');
+
+        //  In this example we'll create 4 specific keys (up, down, left, right) and monitor them in our update function
+
+        upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
+        downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+        leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+        rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+
+    }
+
+    function update() {
+
+        if (upKey.isDown)
+        {
+            p1.y--;
+            p2.y++;
+        }
+        else if (downKey.isDown)
+        {
+            p1.y++;
+            p2.y--;
+        }
+
+        if (leftKey.isDown)
+        {
+            p1.x--;
+            p2.x++;
+        }
+        else if (rightKey.isDown)
+        {
+            p1.x++;
+            p2.x--;
+        }
+
+    }
+    </script>
+
+    </body>
+</html>
