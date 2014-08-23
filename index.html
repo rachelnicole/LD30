@@ -3,22 +3,40 @@
     <head>
         <meta charset="UTF-8" />
         <title>hello phaser!</title>
-        <script src="js/phaser.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript" src="js/phaser.js"></script>
+
         <link type="text/css" rel="stylesheet" href="css/style.css">
   
+      <script type="text/javascript">
 
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18888172-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+  </script>
     </head>
     <body>
+    <div id="caged">
+    </div>
 
     <script type="text/javascript">
 
-    var game = new Phaser.Game(700, 700, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update });
+    var game = new Phaser.Game(700, 700, Phaser.AUTO, 'phaser', { preload: preload, create: create, update: update });
 
     function preload() {
 
-        game.load.image('background', 'assets/background.png');
-        game.load.image('p1', 'assets/p1.png');
-        game.load.image('p2', 'assets/p2.png');
+      game.load.image('background', 'assets/background.png');
+      game.load.image('p1', 'assets/p1.png');
+      game.load.image('p2', 'assets/p2.png');
+
+      game.time.advancedTiming = true;
 
     }
 
@@ -31,47 +49,146 @@
 
     function create() {
 
-        game.add.sprite(0, 0, 'background');
+      game.add.sprite(0, 0, 'background');
 
-        p1 = game.add.sprite(5, 5, 'p1');
+      p2 = game.add.sprite(5, 5, 'p1');
 
-        p2 = game.add.sprite(675, 675, 'p2');
+      p1 = game.add.sprite(675, 675, 'p2'); 
 
-        //  In this example we'll create 4 specific keys (up, down, left, right) and monitor them in our update function
+      game.physics.enable(p1, Phaser.Physics.ARCADE);
+      game.physics.enable(p2, Phaser.Physics.ARCADE);
 
-        upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
-        downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-        leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-        rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+      p1.body.collideWorldBounds = true;
+      p2.body.collideWorldBounds = true;
+
+      p1.body.height = 19;
+      p1.body.width = 19;
+
+      p2.body.height = 19;
+      p2.body.width = 19;
+
+      this.square = game.add.graphics();
+      this.square2 = game.add.graphics();
+        
+      // center the graphics object in the world
+      this.square.x = game.world.centerX;
+      this.square.y = game.world.centerY;
+
+      this.square2.x = game.world.centerX;
+      this.square2.y = game.world.centerY;
+      
+      this.square.beginFill(0x000000);
+      this.square2.beginFill(0x000000);
+      
+      // draw a rectangle at -20, -20 with a width and height of 40, effectively centering it
+      // this.square.drawRect(-20, -20, 40, 40);
+
+
+      
+      this.square.moveTo(5,-6);
+      this.square.lineTo(29,-7);
+      this.square.lineTo(10,0);
+      this.square.lineTo(19,21);
+      this.square.lineTo(-5,32);
+      this.square.lineTo(-5,15);
+      this.square.lineTo(-31,1);
+      this.square.lineTo(-9,1);
+      this.square.lineTo(-9,-39);
+      this.square.lineTo(5,-6);
+      this.square.endFill();
+
+      this.square2.moveTo(6,-1);
+      this.square2.lineTo(26,-7);
+      this.square2.lineTo(3,3);
+      this.square2.lineTo(21,12);
+      this.square2.lineTo(1,8);
+      this.square2.lineTo(3,20);
+      this.square2.lineTo(-10,34);
+      this.square2.lineTo(-1,12);
+      this.square2.lineTo(-16,18);
+      this.square2.lineTo(-3,5);
+      this.square2.lineTo(-22,-9);
+      this.square2.lineTo(-1,-3);
+      this.square2.lineTo(-5,-19);
+      this.square2.lineTo(1,-4);
+      this.square2.lineTo(32,-36);
+      this.square2.lineTo(6,-1);
+      this.square2.endFill();
+
+      upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
+      downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+      leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+      rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+
+      upKey2 = game.input.keyboard.addKey(Phaser.Keyboard.W);
+      downKey2 = game.input.keyboard.addKey(Phaser.Keyboard.S);
+      leftKey2 = game.input.keyboard.addKey(Phaser.Keyboard.A);
+      rightKey2 = game.input.keyboard.addKey(Phaser.Keyboard.D);
 
     }
 
     function update() {
 
-        if (upKey.isDown)
-        {
-            p1.y--;
-            p2.y++;
-        }
-        else if (downKey.isDown)
-        {
-            p1.y++;
-            p2.y--;
-        }
+      this.square.angle++;
+      this.square2.angle--;
 
-        if (leftKey.isDown)
-        {
-            p1.x--;
-            p2.x++;
-        }
-        else if (rightKey.isDown)
-        {
-            p1.x++;
-            p2.x--;
-        }
+      this.square.scale.setTo(Math.sin(game.time.now * 0.001) + 2);
+      this.square2.scale.setTo(Math.sin(game.time.now * 0.001) + 2);
+
+      if (upKey.isDown)
+      {
+          p1.y--;
+      }
+      else if (downKey.isDown)
+      {
+          p1.y++;
+      }
+
+      if (leftKey.isDown)
+      {
+          p1.x--;
+      }
+      else if (rightKey.isDown)
+      {
+          p1.x++;
+      }
+
+      if (upKey2.isDown)
+      {
+          p2.y--;
+      }
+      else if (downKey2.isDown)
+      {
+          p2.y++;
+      }
+
+      if (leftKey2.isDown)
+      {
+          p2.x--;
+      }
+      else if (rightKey2.isDown)
+      {
+          p2.x++;
+      }
+
+
+      game.physics.arcade.overlap(p1, p2, doStuff);
 
     }
+
+    function doStuff() {
+      $('#caged').css('display', 'block');
+    }
+
+
+   
+
     </script>
+
+    <div id="hey-listen">
+      Use WASD to control top left, use  ↑ ↓ ← → for bottom right.<br>
+      don't touch the spiky thing although nothing happens yet. just follow directions, ok.
+    </div>
 
     </body>
 </html>

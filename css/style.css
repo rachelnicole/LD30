@@ -1,5 +1,24 @@
+body {
+	margin: 0;
+}
+
 canvas {
 	width: 700px;
 	height: 700px;
 	margin: 0 auto;
+}
+
+#hey-listen {
+	font-family: sans-serif;
+	font-size: 1em;
+	text-align: center;
+}
+
+#caged {
+	display: none;
+	width: 100%;
+	height: 100%;
+	background: url(../assets/conair.gif);
+	background-size: cover;
+	position: absolute;
 }
