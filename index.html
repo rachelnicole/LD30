@@ -1,14 +1,13 @@
-<!doctype html>
+<!DOCTYPE HTML>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>hello phaser!</title>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script type="text/javascript" src="js/phaser.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <title>THIS DOES STUFF. YEAHHHHHHHH</title>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script type="text/javascript" src="js/phaser.js"></script>
 
-        <link type="text/css" rel="stylesheet" href="css/style.css">
-  
-      <script type="text/javascript">
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <script type="text/javascript">
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-18888172-1']);
@@ -21,156 +20,43 @@
   })();
 
   </script>
-    </head>
-    <body>
-    <div id="caged">
-    </div>
-    <div id="andy">
-    </div>
+  <script src="Boot.js"></script>
+  <script src="Game.js"></script>
+  <script src="Game2.js"></script>
+  <script src="Lose.js"></script>
 
-    <script type="text/javascript">
-
-    var game = new Phaser.Game(700, 700, Phaser.AUTO, 'phaser', { preload: preload, create: create, update: update });
-
-    function preload() {
-
-      game.load.image('background', 'assets/background.png');
-      game.load.image('p1', 'assets/p1.png');
-      game.load.image('p2', 'assets/p2.png');
-      game.load.image('blackhole', 'assets/blackhole.png');
-
-      game.time.advancedTiming = true;
-
-    }
-
-    var sprite;
-
-    var upKey;
-    var downKey;
-    var leftKey;
-    var rightKey;
-
-    function create() {
-
-      game.add.sprite(0, 0, 'background');
-
-      p2 = game.add.sprite(5, 5, 'p1');
-
-      p1 = game.add.sprite(675, 675, 'p2'); 
-
-      blackhole = game.add.sprite(game.world.centerX, game.world.centerY, 'blackhole');
-
-      blackhole.x = game.world.centerX;
-      blackhole.y = game.world.centerY;
-
-      blackhole.anchor.setTo(0.5, 0.5);
-
-
-      game.physics.enable(p1, Phaser.Physics.ARCADE);
-      game.physics.enable(p2, Phaser.Physics.ARCADE);
-      game.physics.enable(blackhole, Phaser.Physics.ARCADE);
-
-      p1.body.collideWorldBounds = true;
-      p2.body.collideWorldBounds = true;
-
-      p1.body.height = 19;
-      p1.body.width = 19;
-
-      p2.body.height = 19;
-      p2.body.width = 19;
-
-      blackhole.body.height = 123;
-      blackhole.body.width = 123;
-      blackhole.body.radius = 61;
-
-      
-    
-
-      upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
-      downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-      leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-      rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-
-      upKey2 = game.input.keyboard.addKey(Phaser.Keyboard.W);
-      downKey2 = game.input.keyboard.addKey(Phaser.Keyboard.S);
-      leftKey2 = game.input.keyboard.addKey(Phaser.Keyboard.A);
-      rightKey2 = game.input.keyboard.addKey(Phaser.Keyboard.D);
-
-      game.physics.startSystem(Phaser.Physics.P2JS);    
-      game.physics.p2.enable(this.square);
-
-    }
-
-    function update() {
-
-      blackhole.angle++;
-      // this.square2.angle--;
-
-      blackhole.scale.setTo(Math.sin(game.time.now * 0.001) + 2);
-      // this.square2.scale.setTo(Math.sin(game.time.now * 0.001) + 2);
-
-      if (upKey.isDown)
-      {
-          p1.y--;
-      }
-      else if (downKey.isDown)
-      {
-          p1.y++;
-      }
-
-      if (leftKey.isDown)
-      {
-          p1.x--;
-      }
-      else if (rightKey.isDown)
-      {
-          p1.x++;
-      }
-
-      if (upKey2.isDown)
-      {
-          p2.y--;
-      }
-      else if (downKey2.isDown)
-      {
-          p2.y++;
-      }
-
-      if (leftKey2.isDown)
-      {
-          p2.x--;
-      }
-      else if (rightKey2.isDown)
-      {
-          p2.x++;
-      }
-
-
-      game.physics.arcade.overlap(p1, p2, doStuffGood);
-      game.physics.arcade.overlap(p1, blackhole, doStuffBad);
-      game.physics.arcade.overlap(p2, blackhole, doStuffBad);
-
-    }
-
-    function doStuffBad() {
-      $('#caged').css('display', 'block');
-    }
-
-    function doStuffGood() {
-      $('#andy').css('display', 'block');
-    }
-
-
-
-
-   
-
-    </script>
-
-    <div id="hey-listen">
+</head>
+<body>
+<div id="hey-listen">
       Use WASD to control top left, use  ↑ ↓ ← → for bottom right.<br>
       don't touch the spiky thing. you want the two circles to touch.
     </div>
 
-    </body>
+<div id="gameContainer"></div>
+
+
+
+<script type="text/javascript">
+
+window.onload = function() {
+
+  //  Create your Phaser game and inject it into the gameContainer div.
+  //  We did it in a window.onload event, but you can do it anywhere (requireJS load, anonymous function, jQuery dom ready, - whatever floats your boat)
+  var game = new Phaser.Game(700, 700, Phaser.AUTO, 'gameContainer');
+
+  //  Add the States your game has.
+  //  You don't have to do this in the html, it could be done in your Boot state too, but for simplicity I'll keep it here.
+  game.state.add('Boot', BasicGame.Boot);
+  game.state.add('Game', BasicGame.Game);
+  game.state.add('Game2', BasicGame.Game2);
+  game.state.add('Lose', BasicGame.Lose);
+
+  //  Now start the Boot state.
+  game.state.start('Game');
+
+};
+
+</script>
+
+</body>
 </html>
