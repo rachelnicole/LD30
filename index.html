@@ -23,19 +23,25 @@
   <script src="Boot.js"></script>
   <script src="Game.js"></script>
   <script src="Game2.js"></script>
+  <script src="Game3.js"></script>
+  <script src="Game4.js"></script>
+  <script src="Game5.js"></script>
   <script src="Lose.js"></script>
+  <script src="Win.js"></script>
 
 </head>
 <body>
+<div id="rickprize">
+</div>
 <div id="hey-listen">
       Use WASD to control top left, use  ↑ ↓ ← → for bottom right.<br>
       don't touch the spiky thing. you want the two circles to touch.
     </div>
-
-<div id="gameContainer"></div>
-
-
-
+<div id="gameContainer">
+  <div id="winner">
+      <a class="prizes"><img src="assets/udidit.png"></a>
+  </div>
+</div>
 <script type="text/javascript">
 
 window.onload = function() {
@@ -49,7 +55,11 @@ window.onload = function() {
   game.state.add('Boot', BasicGame.Boot);
   game.state.add('Game', BasicGame.Game);
   game.state.add('Game2', BasicGame.Game2);
+  game.state.add('Game3', BasicGame.Game3);
+  game.state.add('Game4', BasicGame.Game4);
+  game.state.add('Game5', BasicGame.Game5);
   game.state.add('Lose', BasicGame.Lose);
+  game.state.add('Win', BasicGame.Win);
 
   //  Now start the Boot state.
   game.state.start('Game');

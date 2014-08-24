@@ -96,7 +96,7 @@ BasicGame.Game2.prototype = {
     blackhole.angle++;
       // this.square2.angle--;
 
-      blackhole.scale.setTo(Math.sin(this.game.time.now * 0.001) + 2);
+      blackhole.scale.setTo(Math.sin(this.game.time.now * 0.002) + 2);
       // this.square2.scale.setTo(Math.sin(game.time.now * 0.001) + 2);
 
       if (upKey.isDown)
@@ -133,6 +133,18 @@ BasicGame.Game2.prototype = {
       else if (rightKey2.isDown)
       {
           p2.x++;
+      }
+
+      if (this.game.physics.arcade.overlap(p1, p2)) {
+        this.state.start('Game3');
+      }
+
+      if (this.game.physics.arcade.overlap(p1, blackhole)) {
+        this.state.start('Lose');
+      }
+
+      if (this.game.physics.arcade.overlap(p2, blackhole)) {
+        this.state.start('Lose');
       }
 
   },

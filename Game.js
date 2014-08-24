@@ -68,10 +68,11 @@ BasicGame.Game.prototype = {
       p2.body.height = 19;
       p2.body.width = 19;
 
+      p1.anchor.setTo(0.5, 0.5);
+
       blackhole.body.height = 123;
       blackhole.body.width = 123;
       blackhole.body.radius = 61;
-
       
     
 
@@ -92,15 +93,20 @@ BasicGame.Game.prototype = {
 
   update: function () {
 
+    p1.body.moves = true;
+    p2.body.moves = true;
+
     blackhole.angle++;
       // this.square2.angle--;
 
+      
       blackhole.scale.setTo(Math.sin(this.game.time.now * 0.001) + 2);
       // this.square2.scale.setTo(Math.sin(game.time.now * 0.001) + 2);
 
       if (upKey.isDown)
       {
           p1.y--;
+          p1.body.angularAcceleration = 300;
       }
       else if (downKey.isDown)
       {
